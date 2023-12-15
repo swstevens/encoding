@@ -1,4 +1,6 @@
 import sys
+from collections import defaultdict
+import heapq
 class HuffmanTree():
     def __init__(self, root):
         self.root = root
@@ -27,25 +29,35 @@ class Node():
     def right(self):
         return self.right
 
+def build_heap(freq):
+    heap = [[weight, [char, ""]] for char, weight in freq.items()]
+    heapq.heapify(heap)
+    return heap
 
-def build_ostr(char_list):
+def build_ostr(heap):
     '''
     returns a HuffmanTree object (binary tree) built out of the dictionary that is passed in
+    only leaves are 'present' characters
+    process:
+    find two smallest entries in the dictionary
+    pop them out of the dictionary
+    create a node with 
     '''
+    while len(heap) > 1:
+        low = heapq.heappop(heap)
+        high = heapq.heappop(heap)
+        # TODO: create node here
     return
 
 def main():
-    count = {}
+    count = defaultdict(int)
     if sys.argv[1] is not None:
         try:
             f = open(sys.argv[1])
             for line in f:
                 for char in line:
-                    if char not in count:
-                        count[char] = 1
-                    else:
-                        count[char] +=1
-            sorted_count = dict(sorted(count.items(), key=lambda item: item[1]))
+                    count[char] +=1
+            sorted_count = build_heap(count)
             ostr = build_ostr(sorted_count)
         except:
             print("invalid file")
