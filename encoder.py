@@ -35,19 +35,15 @@ def build_heap(freq):
     return heap
 
 def build_ostr(heap):
-    '''
-    returns a HuffmanTree object (binary tree) built out of the dictionary that is passed in
-    only leaves are 'present' characters
-    process:
-    find two smallest entries in the dictionary
-    pop them out of the dictionary
-    create a node with 
-    '''
     while len(heap) > 1:
         low = heapq.heappop(heap)
         high = heapq.heappop(heap)
-        # TODO: create node here
-    return
+        for pair in low[1:]:
+            pair[1] = '0' + pair[1]
+        for pair in high[1:]:
+            pair[1] = '1' + pair[1]
+        heapq.heappush(heap, [low[0] + high[0]] + low[1:] + high[1:])
+    return heap[0]
 
 def main():
     count = defaultdict(int)
@@ -59,6 +55,7 @@ def main():
                     count[char] +=1
             sorted_count = build_heap(count)
             ostr = build_ostr(sorted_count)
+            print(ostr)
         except:
             print("invalid file")
     else:
