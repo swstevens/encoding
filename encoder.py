@@ -45,6 +45,14 @@ def build_ostr(heap):
         heapq.heappush(heap, [low[0] + high[0]] + low[1:] + high[1:])
     return heap[0]
 
+def huffman_code(tree):
+    huff_code = {}
+    for pair in tree[1:]:
+        char = pair[0]
+        code = pair[1]
+        huff_code[char] = code
+    return huff_code
+
 def main():
     count = defaultdict(int)
     if sys.argv[1] is not None:
@@ -54,13 +62,13 @@ def main():
                 for char in line:
                     count[char] +=1
             sorted_count = build_heap(count)
-            ostr = build_ostr(sorted_count)
-            print(ostr)
+            tree = build_ostr(sorted_count)
+            huffcode = huffman_code(tree)
         except:
-            print("invalid file")
+            print("trouble loading file")
     else:
         print("file not declared")
     return count
 
 if __name__ == '__main__':
-    print(main())
+    main()
