@@ -58,12 +58,15 @@ def main():
     if sys.argv[1] is not None:
         try:
             f = open(sys.argv[1])
-            for line in f:
-                for char in line:
-                    count[char] +=1
+            content = f.read()
+            for char in content:
+                count[char] +=1
             sorted_count = build_heap(count)
             tree = build_ostr(sorted_count)
             huffcode = huffman_code(tree)
+            out = open('out.txt', "w+")
+            for char in content:
+                out.write(huffcode[char])
         except:
             print("trouble loading file")
     else:
