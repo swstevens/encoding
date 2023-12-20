@@ -9,7 +9,7 @@ def main():
         try:
             f = open(sys.argv[1])
             base_huffcode = json.loads(f.readline()[:-1])
-            reversed_huffcode = dict(reversed(list(base_huffcode.items())))
+            reversed_huffcode = {v: k for k, v in base_huffcode.items()}
             content = f.readline()
             out = open('out.txt', "w+")
             for char in content:
