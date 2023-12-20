@@ -8,15 +8,16 @@ def main():
     if sys.argv[1] is not None:
         try:
             f = open(sys.argv[1])
-            huffcode = json.loads(f.readline())
+            base_huffcode = json.loads(f.readline()[:-1])
+            reversed_huffcode = dict(reversed(list(base_huffcode.items())))
             content = f.readline()
             out = open('out.txt', "w+")
             for char in content:
                 # check against the value of the dictionary and output the character to the sheet
                 continue
-            out.write(json.dumps(huffcode) + '\n')
             for char in content:
-                out.write(huffcode[char])
+                # TODO: need to rewrite this for loop to search in the string until it finds a match.
+                out.write(reversed_huffcode[char])
         except:
             print("trouble loading file")
     else:
