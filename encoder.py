@@ -1,6 +1,7 @@
 import sys
 from collections import defaultdict
 import heapq
+import json
 class HuffmanTree():
     def __init__(self, root):
         self.root = root
@@ -65,6 +66,7 @@ def main():
             tree = build_ostr(sorted_count)
             huffcode = huffman_code(tree)
             out = open('out.txt', "w+")
+            out.write(json.dumps(huffcode) + '\n')
             for char in content:
                 out.write(huffcode[char])
         except:
