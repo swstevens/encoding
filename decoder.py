@@ -22,7 +22,10 @@ class Node():
 
 def insert(node, value, index):
     print(index)
-    if index[0] == '0':
+    if index == '':
+        node.character = value
+        return
+    elif index[0] == '0':
         if node.left is None:
             print('a')
             node.left = Node(head=node)
@@ -34,8 +37,6 @@ def insert(node, value, index):
             node.right = Node(head=node)
             print('d')
         insert(node.right, value, index[1:])
-    else:
-        node.character = value
     return
 
 def main():
@@ -49,16 +50,10 @@ def main():
             tree = HuffmanTree(Node(None))
             print('a')
             for key, value in base_huffcode.items():
-                print('b')
+                print('x')
                 insert(tree.root, key, value)
             content = f.readline()
             out = open('out.txt', "w+")
-            for char in content:
-                # check against the value of the dictionary and output the character to the sheet
-                continue
-            for char in content:
-                # TODO: need to rewrite this for loop to search in the string until it finds a match.
-                out.write(reversed_huffcode[char])
         except:
             print("trouble loading file")
     else:
