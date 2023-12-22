@@ -52,8 +52,21 @@ def main():
             for key, value in base_huffcode.items():
                 print('x')
                 insert(tree.root, key, value)
+            print('finished tree builder')
             content = f.readline()
+            curr_node = tree.root
             out = open('out.txt', "w+")
+            print('starting builder')
+            for character in content:
+                if character == '0':
+                    curr_node = curr_node.left
+                elif character == '1':
+                    curr_node = curr_node.left
+
+                if curr_node.is_leaf() is True:
+                    out.write(curr_node.character)
+                    curr_node = tree.root
+
         except:
             print("trouble loading file")
     else:
