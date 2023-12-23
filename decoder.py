@@ -21,21 +21,16 @@ class Node():
         return True if self.left is None and self.right is None else False
 
 def insert(node, value, index):
-    print(index)
     if index == '':
         node.character = value
         return
     elif index[0] == '0':
         if node.left is None:
-            print('a')
             node.left = Node(head=node)
-            print('b')
         insert(node.left, value, index[1:])
     elif index[0] == '1':
         if node.right is None:
-            print('c')
             node.right = Node(head=node)
-            print('d')
         insert(node.right, value, index[1:])
     return
 
@@ -46,11 +41,8 @@ def main():
             f = open(sys.argv[1])
             base_huffcode = json.loads(f.readline()[:-1])
             reversed_huffcode = {v: k for k, v in base_huffcode.items()}
-            print('o')
             tree = HuffmanTree(Node(None))
-            print('a')
             for key, value in base_huffcode.items():
-                print('x')
                 insert(tree.root, key, value)
             print('finished tree builder')
             content = f.readline()
@@ -61,8 +53,7 @@ def main():
                 if character == '0':
                     curr_node = curr_node.left
                 elif character == '1':
-                    curr_node = curr_node.left
-
+                    curr_node = curr_node.right
                 if curr_node.is_leaf() is True:
                     out.write(curr_node.character)
                     curr_node = tree.root
