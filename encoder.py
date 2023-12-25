@@ -2,33 +2,6 @@ import sys
 from collections import defaultdict
 import heapq
 import json
-class HuffmanTree():
-    def __init__(self, root):
-        self.root = root
-class Node():
-    def __init__(self, head, weight, character):
-        self.head =  head # parent node
-        self.character = character
-        self.weight = weight
-        self.left = None
-        self.right = None
-    def __contains__(self, head):
-        if head == self.head:
-            return True
-        return (False if self.left is None else head in self.left) or (False if self.right is None else head in self.right)
-    def is_leaf(self):
-        return True if self.left is None and self.right is None else False
-    def insert(self, head, left, right): # TODO: needs to account for self.value, might need a rework
-        if self.head is None:
-            self.head, self.left, self.right = head, Node(left), Node(right)
-        elif self.head == head:
-            self.left, self.right = Node(left), Node(right)
-        else:
-            getattr(self, 'left' if self.left and head in self.left else 'right').insert(head, left, right)
-    def left(self):
-        return self.left
-    def right(self):
-        return self.right
 
 def build_heap(freq):
     heap = [[weight, [char, ""]] for char, weight in freq.items()]
@@ -36,6 +9,13 @@ def build_heap(freq):
     return heap
 
 def build_ostr(heap):
+    '''
+    builds a minheap using the inputted dictionary
+    takes the two values in the minheap, 
+    treating the first as the left values and the second as the right value
+    combines them into one list, and inserts it back into the minheap
+    ends when only one item is left
+    '''
     while len(heap) > 1:
         low = heapq.heappop(heap)
         high = heapq.heappop(heap)
@@ -47,6 +27,7 @@ def build_ostr(heap):
     return heap[0]
 
 def huffman_code(tree):
+    # completes the codes found in the minheap to be compatible with a binary tree
     huff_code = {}
     for pair in tree[1:]:
         char = pair[0]

@@ -21,6 +21,10 @@ class Node():
         return True if self.left is None and self.right is None else False
 
 def insert(node, value, index):
+    '''
+    recursive function to build a binary tree from an input
+    if a node does not exist, it will create them as it travels down
+    '''
     if index == '':
         node.character = value
         return
@@ -39,12 +43,14 @@ def main():
     if sys.argv[1] is not None:
         try:
             f = open(sys.argv[1])
-            base_huffcode = json.loads(f.readline()[:-1])
-            reversed_huffcode = {v: k for k, v in base_huffcode.items()}
+
+            # load key from file and convert to binary tree 
+            base_huffcode = json.loads(f.readline())
             tree = HuffmanTree(Node(None))
             for key, value in base_huffcode.items():
                 insert(tree.root, key, value)
-            print('finished tree builder')
+
+            # load encoded content and decrypt
             content = f.readline()
             curr_node = tree.root
             out = open('out.txt', "w+")
@@ -54,6 +60,7 @@ def main():
                     curr_node = curr_node.left
                 elif character == '1':
                     curr_node = curr_node.right
+                # after moving nodes, check to see if we've hit a leaf, which contains a character
                 if curr_node.is_leaf() is True:
                     out.write(curr_node.character)
                     curr_node = tree.root
